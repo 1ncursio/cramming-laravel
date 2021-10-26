@@ -9,7 +9,7 @@
             rounded-lg
             mx-4
             md:mx-auto
-            my-56
+            my-8
             max-w-md
             md:max-w-2xl
         "
@@ -27,10 +27,18 @@
                         {{ post.user.name }}
                     </h2>
                     <small class="text-sm text-gray-700">{{
-                        post.created_at
+                        relativeCreatedAt
                     }}</small>
                 </div>
-                <p class="text-gray-700">Joined 12 SEP 2012.</p>
+                <Link :href="route('posts.show', post.id)">
+                    <p class="text-gray-700">{{ post.title }}</p>
+                </Link>
+                <p class="mt-3" v-if="post.images.length > 0">
+                    <img
+                        :src="`/storage/images/${post.images[0].url}`"
+                        alt=""
+                    />
+                </p>
                 <p class="mt-3 text-gray-700 text-sm">
                     {{ post.content }}
                 </p>
@@ -67,37 +75,30 @@
                         </svg>
                         <span>8</span>
                     </div>
-                    <div class="flex mr-2 text-gray-700 text-sm mr-4">
-                        <svg
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            class="w-4 h-4 mr-1"
-                            stroke="currentColor"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
-                            />
-                        </svg>
-                        <span>share</span>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 </template>
 <script>
-import { defineComponent } from "@vue/runtime-core";
+import { Link } from "@inertiajs/inertia-vue3";
+import { computed, defineComponent } from "@vue/runtime-core";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-
 dayjs.extend(relativeTime);
 
 export default defineComponent({
+    components: {
+        Link,
+    },
     props: ["post"],
-    setup() {},
+    setup(props) {
+        const relativeCreatedAt = computed(() =>
+            dayjs(props.post.created_at).fromNow()
+        );
+
+        return { relativeCreatedAt };
+    },
 });
 </script>
 <style lang=""></style>

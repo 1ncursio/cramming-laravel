@@ -6,8 +6,7 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class PostPolicy
-{
+class PostPolicy {
     use HandlesAuthorization;
 
     /**
@@ -16,8 +15,7 @@ class PostPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function viewAny(User $user)
-    {
+    public function viewAny(User $user) {
         //
     }
 
@@ -28,8 +26,7 @@ class PostPolicy
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Post $post)
-    {
+    public function view(User $user, Post $post) {
         //
     }
 
@@ -39,8 +36,7 @@ class PostPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(User $user)
-    {
+    public function create(User $user) {
         //
     }
 
@@ -51,9 +47,8 @@ class PostPolicy
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Post $post)
-    {
-        //
+    public function update(User $user, Post $post) {
+        return $user->id === $post->user_id;
     }
 
     /**
@@ -63,9 +58,8 @@ class PostPolicy
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Post $post)
-    {
-        //
+    public function delete(User $user, Post $post) {
+        return $user->id === $post->user_id;
     }
 
     /**
@@ -75,8 +69,7 @@ class PostPolicy
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Post $post)
-    {
+    public function restore(User $user, Post $post) {
         //
     }
 
@@ -87,8 +80,7 @@ class PostPolicy
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Post $post)
-    {
+    public function forceDelete(User $user, Post $post) {
         //
     }
 }

@@ -30,18 +30,20 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 
-Route::prefix('/posts')->group(function () {
+Route::group(['prefix' => '/posts', 'middleware' => ['auth:sanctum', 'verified']], function () {
     Route::get('/', [PostController::class, 'index'])->name('posts.index');
 
-    Route::get('/create', [PostController::class, 'create'])->middleware(['auth']);
+    Route::get('/create', [PostController::class, 'create'])->name('posts.create');
 
-    Route::get('/edit/{postId}', [PostController::class, 'edit'])->middleware(['auth'])->name('posts.edit');
+    Route::get('/edit/{post}', [PostController::class, 'edit'])->name('posts.edit');
 
-    Route::patch('/{postId}', [PostController::class, 'update'])->middleware(['auth'])->name('posts.update');
+    Route::patch('/{post}', [PostController::class, 'update'])->name('posts.update');
 
-    Route::post('/', [PostController::class, 'store'])->middleware(['auth'])->name('posts.store');
+    Route::post('/', [PostController::class, 'store'])->name('posts.store');
 
-    Route::delete('/{postId}', [PostController::class, 'destroy'])->middleware(['auth'])->name('posts.delete');
+    Route::post('/image', [PostController::class, 'storeImage'])->name('posts.storeImage');
 
-    Route::get('/{postId}', [PostController::class, 'show'])->name('posts.show');
+    Route::delete('/{post}', [PostController::class, 'destroy'])->name('posts.delete');
+
+    Route::get('/{post}', [PostController::class, 'show'])->name('posts.show');
 });

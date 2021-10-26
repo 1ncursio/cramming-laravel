@@ -1,19 +1,37 @@
 <template>
-    <Layout>
-        <div v-for="(post, i) in posts.data" :key="post.id">
+    <app-layout title="Posts">
+        <Link :href="route('posts.create')">
+            <button
+                class="
+                    bg-indigo-500
+                    hover:bg-indigo-600
+                    text-white
+                    font-bold
+                    py-2
+                    px-4
+                    rounded
+                "
+            >
+                Add new post
+            </button>
+        </Link>
+
+        <div v-for="(post, i) in posts.data" :key="i">
             <post-card :post="post" />
         </div>
-    </Layout>
+    </app-layout>
 </template>
 <script>
-import Layout from "@/Layouts/AppLayout.vue";
+import AppLayout from "@/Layouts/AppLayout.vue";
 import PostCard from "./PostCard.vue";
 import { defineComponent } from "@vue/runtime-core";
+import { Link } from "@inertiajs/inertia-vue3";
 
 export default defineComponent({
     components: {
-        Layout,
+        AppLayout,
         PostCard,
+        Link,
     },
     props: ["posts"],
     setup(props) {
